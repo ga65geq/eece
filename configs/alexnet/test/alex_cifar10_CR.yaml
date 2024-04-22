@@ -1,0 +1,46 @@
+common_args:
+  device: 'gpu'
+  device_num:
+    - 0
+  device_name: 'cuda:0'
+
+data_args:
+  dataset: "CIFAR10_224"
+  num_classes: 10
+  data_cache_dir: "/srv/data/image_dataset/CIFAR10"
+
+model_args:
+  architecture: "Alexnet"
+  snet: true
+  model_name: "alex_CR"
+  model_cache_dir: "./trained_model/alex"
+  expansion: 1
+  forward_type: "snet_test_mac"
+
+training_args:
+  project_name: "Alexnet"
+  pretrained_path: "/home/wang/code/project1/trained_model/Alexnet/checkpoint.pth"
+  use_wandb: true
+  early_stopping: true
+  patience: 50
+  min_delta: 0.0001
+  epochs: 300
+  num_workers: 1
+  batch_size: 1
+  save_top_k: 1
+  learning_rate: 0.001
+  momentum: 0.9
+  weight_decay: 0.
+  pos_weight: 1
+
+exit_strategy:
+  ckpt_path: './trained_model/alex/alex_CR-v5.ckpt'
+  strategy_name: "CompareN"
+  activation: "softmax"
+  num_exit_points: 5
+  thresh_hold:
+    - 0.99
+    - 0.89
+    - 0.78
+    - 0.99
+    - 0.99

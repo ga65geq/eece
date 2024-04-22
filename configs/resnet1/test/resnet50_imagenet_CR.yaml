@@ -1,0 +1,52 @@
+common_args:
+  device: 'gpu'
+  device_num:
+    - 0
+  device_name: 'cuda:0'
+
+data_args:
+  dataset: "ImageNet"
+  num_classes: 1000
+  data_cache_dir: "/srv/data/image_dataset/ImageNet"
+
+model_args:
+  architecture: "ResNet50_imgnet"
+  snet: true
+  model_name: "ResNet50_imagenet_bc"
+  model_cache_dir: "./trained_model/resnet50_imgnet"
+  expansion: 1
+  forward_type: "snet_test_mac"
+
+training_args:
+  project_name: "resnet50_imgnet"
+  use_wandb: true
+  early_stopping: false
+  epochs: 50
+  num_workers: 16
+  batch_size: 1
+  save_top_k: 5
+  learning_rate: 0.001
+  momentum: 0.9
+  pos_weight: 396
+  factor_decay: true
+  weight_decay: 0.0005
+#  milestones:
+#    - 20
+#    - 40
+#  gamma: 0.2
+
+exit_strategy:
+  ckpt_path: './trained_model/resnet50_imgnet/ResNet50_imgnet_cr.ckpt'
+  strategy_name: "CompareN"
+  activation: "softmax"
+  num_exit_points: 4
+  thresh_hold:
+#    - 0.0
+#    - 0
+#    - 0
+#    - 0
+    - 0.02
+    - 0.02
+    - 0.02
+    - 0.02
+

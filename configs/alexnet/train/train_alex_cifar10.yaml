@@ -1,0 +1,57 @@
+common_args:
+  device: 'gpu'
+  device_num:
+    - 0
+  device_name: 'cuda:0'
+
+data_args:
+  dataset: "CIFAR10_224"
+  num_classes: 10
+  data_cache_dir: "/srv/data/image_dataset/CIFAR10"
+
+model_args:
+  architecture: "Alexnet"
+  snet: false
+  model_name: "alex1"
+  model_cache_dir: "./trained_model/alex"
+  expansion: 1
+  forward_type: "normal_train"
+
+training_args:
+  project_name: "Alexnet"
+  pretrained_path: "/home/wang/code/project1/trained_model/Alexnet/checkpoint.pth"
+  use_wandb: true
+  early_stopping: false
+  patience: 50
+  min_delta: 0.0001
+  epochs: 50
+  num_workers: 1
+  batch_size: 100
+  save_top_k: 5
+  learning_rate: 0.001
+  momentum: 0.9
+  weight_decay: 0.
+
+exit_strategy:
+  strategy_name: ""
+  activation: "softmax"
+  num_exit_points: 5
+  search: False
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

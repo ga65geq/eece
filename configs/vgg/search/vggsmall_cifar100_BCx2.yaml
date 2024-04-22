@@ -1,0 +1,47 @@
+common_args:
+  device: 'gpu'
+  device_num:
+    - 2
+  device_name: 'cuda:2'
+
+data_args:
+  dataset: "CIFAR100"
+  num_classes: 100
+  data_cache_dir: "/srv/data/image_dataset/CIFAR100"
+
+model_args:
+  architecture: "Vggsmall"
+  snet: true
+  model_name: "Vggsmall_BCx2"
+  model_cache_dir: "./trained_model/vgg"
+  expansion: 2
+  forward_type: "snet_test_fine_tune"
+
+training_args:
+  project_name: "Vggsmall"
+  use_wandb: true
+  early_stopping: false
+  epochs: 400
+  num_workers: 1
+  batch_size: 1000
+  save_top_k: 5
+  learning_rate: 0.02
+  momentum: 0.9
+  weight_decay: 0.005
+  pos_weight: 396
+  milestones:
+    - 100
+    - 150
+    - 300
+
+exit_strategy:
+  ckpt_path: './trained_model/vgg/Vggsmall_BCx2n.ckpt'
+  strategy_name: "LargeN"
+  activation: "sigmoid"
+  num_exit_points: 6
+
+search:
+  search: true
+  start_thresh: 0.01
+  step: 0.01
+  tolerance: 0.008

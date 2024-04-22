@@ -1,0 +1,47 @@
+common_args:
+  device: 'gpu'
+  device_num:
+    - 3
+  device_name: 'cuda:3'
+
+data_args:
+  dataset: "CIFAR100"
+  num_classes: 100
+  data_cache_dir: "/srv/data/image_dataset/CIFAR100"
+
+model_args:
+  architecture: "ResNet50"
+  snet: true
+  model_name: "ResNet50"
+  model_cache_dir: "./trained_model/resnet50"
+  expansion: 1
+  forward_type: "snet_test_fine_tune"
+
+training_args:
+  project_name: "resnet50"
+  use_wandb: true
+  early_stopping: false
+  epochs: 400
+  num_workers: 1
+  batch_size: 1000
+  save_top_k: 5
+  learning_rate: 0.02
+  momentum: 0.9
+  weight_decay: 0.005
+  pos_weight: 396
+  milestones:
+    - 100
+    - 150
+    - 300
+
+exit_strategy:
+  ckpt_path: './trained_model/resnet50n/ResNet50_CR.ckpt'
+  strategy_name: "CompareN"
+  activation: "softmax"
+  num_exit_points: 4
+
+search:
+  search: true
+  start_thresh: 1.
+  step: 0.01
+  tolerance: 0.005

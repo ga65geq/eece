@@ -1,0 +1,58 @@
+common_args:
+  device: 'gpu'
+  device_num:
+    - 1
+  device_name: 'cuda:1'
+
+data_args:
+  dataset: "CIFAR100"
+  num_classes: 100
+  data_cache_dir: "/srv/data/image_dataset/CIFAR100"
+
+model_args:
+  architecture: "Vggsmall"
+  snet: false
+  model_name: "Vggsmall"
+  model_cache_dir: "./trained_model/vgg"
+  expansion: 1
+  forward_type: "normal_test_mac"
+
+training_args:
+  project_name: "Vggsmall"
+  use_wandb: true
+  early_stopping: false
+  epochs: 400
+  num_workers: 1
+  batch_size: 1
+  save_top_k: 5
+  learning_rate: 0.02
+  momentum: 0.9
+  weight_decay: 0.005
+  milestones:
+    - 100
+    - 150
+    - 300
+
+exit_strategy:
+  ckpt_path: './trained_model/vgg/Vggsmall-v1.ckpt'
+  strategy_name: ""
+  activation: "softmax"
+  num_exit_points: 6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
